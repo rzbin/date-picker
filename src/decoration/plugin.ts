@@ -41,9 +41,30 @@ class InlineDatePickerWidget extends WidgetType {
 			input.showPicker();
 		});
 
+		// Workaround to return focus to the editor when the picker is closed
+		input.addEventListener("mouseup", () => {
+			view.focus();
+		});
+		input.addEventListener("blur", () => {
+			view.focus();
+		});
+		input.addEventListener("keydown", (e) => {
+			view.focus();
+		});
+
 		input.onchange = () => {
 			const date = moment(input.value);
 			const formattedDate = date.format(this.format);
+
+			// Check if the cursor is within the range from-to, if so, move it to the end of the inserted date
+			const cursor = view.state.selection.main;
+			const isCursorInRange =
+				cursor.anchor >= this.from && cursor.anchor <= this.to;
+			const selection = isCursorInRange
+				? {
+						anchor: this.from + formattedDate.length,
+				  }
+				: undefined;
 
 			const transaction = view.state.update({
 				changes: {
@@ -51,10 +72,9 @@ class InlineDatePickerWidget extends WidgetType {
 					to: this.to,
 					insert: formattedDate,
 				},
-				selection: { anchor: this.from + formattedDate.length },
+				selection,
 			});
 			view.dispatch(transaction);
-			view.focus();
 		};
 
 		this.input = input;
@@ -65,6 +85,15 @@ class InlineDatePickerWidget extends WidgetType {
 	showPicker() {
 		this.input?.focus({ preventScroll: true });
 		this.input?.showPicker();
+	}
+
+	eq(other: InlineDatePickerWidget): boolean {
+		return (
+			this.from === other.from &&
+			this.to === other.to &&
+			this.date.isSame(other.date) &&
+			this.format === other.format
+		);
 	}
 }
 
