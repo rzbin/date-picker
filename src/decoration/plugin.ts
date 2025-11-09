@@ -48,8 +48,10 @@ class InlineDatePickerWidget extends WidgetType {
 					to: this.to,
 					insert: formattedDate,
 				},
+				selection: { anchor: this.from + formattedDate.length },
 			});
 			view.dispatch(transaction);
+			view.focus();
 		};
 
 		this.input = input;
