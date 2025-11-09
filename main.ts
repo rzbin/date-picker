@@ -4,7 +4,7 @@ import { insertTodaysDate } from "src/commands/insertTodaysDate";
 import { openDatePicker } from "src/commands/openDatePicker";
 import { inlineDatePickerViewPlugin } from "src/decoration/plugin";
 
-interface InlineDatePickerSettings {
+export interface InlineDatePickerSettings {
 	dateFormat: string;
 }
 
@@ -13,7 +13,7 @@ const DEFAULT_SETTINGS: InlineDatePickerSettings = {
 };
 
 export default class InlineDatePickerPlugin extends Plugin {
-	settings: InlineDatePickerSettings;
+	public static settings: InlineDatePickerSettings;
 
 	async onload() {
 		await this.loadSettings();
@@ -29,7 +29,7 @@ export default class InlineDatePickerPlugin extends Plugin {
 	onunload() {}
 
 	async loadSettings() {
-		this.settings = Object.assign(
+		InlineDatePickerPlugin.settings = Object.assign(
 			{},
 			DEFAULT_SETTINGS,
 			await this.loadData()
@@ -37,7 +37,8 @@ export default class InlineDatePickerPlugin extends Plugin {
 	}
 
 	async saveSettings() {
-		await this.saveData(this.settings);
+		await this.saveData(InlineDatePickerPlugin.settings);
+		await this.loadSettings();
 	}
 }
 
@@ -62,9 +63,9 @@ class InlineDatePickerSettingTab extends PluginSettingTab {
 			.addText((text) =>
 				text
 					.setPlaceholder(DEFAULT_SETTINGS.dateFormat)
-					.setValue(this.plugin.settings.dateFormat)
+					.setValue(InlineDatePickerPlugin.settings.dateFormat)
 					.onChange(async (value) => {
-						this.plugin.settings.dateFormat = value;
+						InlineDatePickerPlugin.settings.dateFormat = value;
 						await this.plugin.saveSettings();
 					})
 			);

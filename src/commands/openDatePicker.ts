@@ -1,6 +1,6 @@
 import { Command, Notice } from "obsidian";
 import {
-	InlineDatePickerPluginValue,
+	InlineDatePickerViewPlugin,
 	inlineDatePickerViewPlugin,
 } from "src/decoration/plugin";
 
@@ -13,7 +13,7 @@ export const openDatePicker: Command = {
 
 		const plugin = editorView.plugin(
 			inlineDatePickerViewPlugin
-		) as InlineDatePickerPluginValue;
+		) as InlineDatePickerViewPlugin;
 
 		if (!plugin) {
 			console.error("`inlineDatePickerViewPlugin` not found.");

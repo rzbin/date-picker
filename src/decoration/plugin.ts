@@ -10,6 +10,7 @@ import {
 	WidgetType,
 	PluginSpec,
 } from "@codemirror/view";
+import InlineDatePickerPlugin from "main";
 import moment from "moment";
 
 class InlineDatePickerWidget extends WidgetType {
@@ -103,7 +104,7 @@ type WidgetPointer = {
 	widget: InlineDatePickerWidget;
 };
 
-export class InlineDatePickerPluginValue implements PluginValue {
+export class InlineDatePickerViewPlugin implements PluginValue {
 	decorations: DecorationSet;
 	widgetPointers: WidgetPointer[];
 
@@ -112,7 +113,11 @@ export class InlineDatePickerPluginValue implements PluginValue {
 	}
 
 	update(update: ViewUpdate) {
-		if (update.docChanged || update.viewportChanged) {
+		if (
+			update.docChanged ||
+			update.viewportChanged ||
+			update.focusChanged
+		) {
 			this.decorations = this.buildDecorations(update.view);
 		}
 	}
@@ -133,8 +138,8 @@ export class InlineDatePickerPluginValue implements PluginValue {
 							node.from,
 							node.to
 						);
-						// TODO: Get date format from settings.
-						const format = "YYYY-MM-DD";
+						const format =
+							InlineDatePickerPlugin.settings.dateFormat;
 						const date = moment(nodeText, format, true);
 
 						if (!date.isValid()) {
@@ -170,11 +175,11 @@ export class InlineDatePickerPluginValue implements PluginValue {
 	}
 }
 
-const pluginSpec: PluginSpec<InlineDatePickerPluginValue> = {
-	decorations: (value: InlineDatePickerPluginValue) => value.decorations,
+const pluginSpec: PluginSpec<InlineDatePickerViewPlugin> = {
+	decorations: (value: InlineDatePickerViewPlugin) => value.decorations,
 };
 
 export const inlineDatePickerViewPlugin = ViewPlugin.fromClass(
-	InlineDatePickerPluginValue,
+	InlineDatePickerViewPlugin,
 	pluginSpec
 );

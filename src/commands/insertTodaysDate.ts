@@ -1,12 +1,15 @@
+import InlineDatePickerPlugin from "main";
 import moment from "moment";
 import { Command } from "obsidian";
 
 export const insertTodaysDate: Command = {
 	id: "insert-todays-date",
 	name: "Insert today's date",
-	editorCallback: (editor) => {
-		// TODO: Get date format from plugin settings
-		const formattedDate = moment().format("YYYY-MM-DD");
-		editor.replaceRange(formattedDate, editor.getCursor());
+	editorCallback: (editor, view) => {
+		const format = InlineDatePickerPlugin.settings.dateFormat;
+		const formattedDate = moment().format(format);
+		const cursor = editor.getCursor();
+		editor.replaceRange(formattedDate, cursor);
+		editor.setCursor(cursor.line, cursor.ch + formattedDate.length);
 	},
 };
