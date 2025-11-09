@@ -1,6 +1,7 @@
+import moment from "moment";
 import { App, Plugin, PluginSettingTab, Setting } from "obsidian";
 import { insertTodaysDate } from "src/commands/insertTodaysDate";
-import { fitsDateFormat } from "src/utils/helpers";
+import { InlineDatePickerViewPlugin } from "src/decoration/plugin";
 
 interface InlineDatePickerSettings {
 	dateFormat: string;
@@ -21,13 +22,7 @@ export default class InlineDatePickerPlugin extends Plugin {
 
 		this.addSettingTab(new InlineDatePickerSettingTab(this.app, this));
 
-		this.registerDomEvent(document, "mouseover", (evt: MouseEvent) => {
-			const target = evt.target as HTMLElement;
-
-			if (fitsDateFormat(target.innerText, this.settings.dateFormat)) {
-				console.log("Date format matched:", target.innerText);
-			}
-		});
+		this.registerEditorExtension([InlineDatePickerViewPlugin]);
 	}
 
 	onunload() {}
@@ -61,14 +56,13 @@ class InlineDatePickerSettingTab extends PluginSettingTab {
 		new Setting(containerEl)
 			.setName("Date Format")
 			.setDesc(
-				"Dates will be generated and parsed using this format. Must include YYYY, MM, and DD."
+				"Dates will be generated and parsed using this (Moment.js) format."
 			)
 			.addText((text) =>
 				text
 					.setPlaceholder(DEFAULT_SETTINGS.dateFormat)
 					.setValue(this.plugin.settings.dateFormat)
 					.onChange(async (value) => {
-						// TODO: Validate date format
 						this.plugin.settings.dateFormat = value;
 						await this.plugin.saveSettings();
 					})
