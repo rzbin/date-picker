@@ -17,6 +17,8 @@ class InlineDatePickerWidget extends WidgetType {
 	to: number;
 	format: string;
 
+	input?: HTMLInputElement;
+
 	constructor(from: number, to: number, format: string) {
 		super();
 		this.from = from;
@@ -50,12 +52,26 @@ class InlineDatePickerWidget extends WidgetType {
 			view.dispatch(transaction);
 		};
 
+		this.input = input;
+
 		return input;
+	}
+
+	showPicker() {
+		this.input?.focus({ preventScroll: true });
+		this.input?.showPicker();
 	}
 }
 
-class InlineDatePickerPluginValue implements PluginValue {
+type WidgetPointer = {
+	from: number;
+	to: number;
+	widget: InlineDatePickerWidget;
+};
+
+export class InlineDatePickerPluginValue implements PluginValue {
 	decorations: DecorationSet;
+	widgetPointers: WidgetPointer[];
 
 	constructor(view: EditorView) {
 		this.decorations = this.buildDecorations(view);
@@ -70,13 +86,14 @@ class InlineDatePickerPluginValue implements PluginValue {
 	destroy() {}
 
 	buildDecorations(view: EditorView): DecorationSet {
+		this.widgetPointers = [];
 		const builder = new RangeSetBuilder<Decoration>();
 
 		for (let { from, to } of view.visibleRanges) {
 			syntaxTree(view.state).iterate({
 				from,
 				to,
-				enter(node) {
+				enter: (node) => {
 					if (node.type.name.startsWith("hmd-internal-link")) {
 						const nodeText = view.state.doc.sliceString(
 							node.from,
@@ -94,15 +111,23 @@ class InlineDatePickerPluginValue implements PluginValue {
 							return;
 						}
 
+						const widget = new InlineDatePickerWidget(
+							node.from,
+							node.to,
+							format
+						);
+
+						this.widgetPointers.push({
+							from: node.from,
+							to: node.to,
+							widget,
+						});
+
 						builder.add(
 							node.from,
 							node.from,
 							Decoration.replace({
-								widget: new InlineDatePickerWidget(
-									node.from,
-									node.to,
-									format
-								),
+								widget,
 							})
 						);
 					}
@@ -118,7 +143,7 @@ const pluginSpec: PluginSpec<InlineDatePickerPluginValue> = {
 	decorations: (value: InlineDatePickerPluginValue) => value.decorations,
 };
 
-export const InlineDatePickerViewPlugin = ViewPlugin.fromClass(
+export const inlineDatePickerViewPlugin = ViewPlugin.fromClass(
 	InlineDatePickerPluginValue,
 	pluginSpec
 );
