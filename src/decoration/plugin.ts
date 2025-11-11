@@ -56,6 +56,7 @@ class InlineDatePickerWidget extends WidgetType {
 		this.input.onchange = () => {
 			const date = moment(this.input.value)
 			const formattedDate = date.format(this.format)
+			const link = `[[${formattedDate}]]`
 
 			// Check if the cursor is within the range from-to, if so, move it to the end of the inserted date
 			const cursor = view.state.selection.main
@@ -63,7 +64,7 @@ class InlineDatePickerWidget extends WidgetType {
 				cursor.anchor >= this.from && cursor.anchor <= this.to
 			const selection = isCursorInRange
 				? {
-						anchor: this.from + formattedDate.length,
+						anchor: this.from + link.length,
 					}
 				: undefined
 
@@ -71,7 +72,7 @@ class InlineDatePickerWidget extends WidgetType {
 				changes: {
 					from: this.from,
 					to: this.to,
-					insert: formattedDate,
+					insert: link,
 				},
 				selection,
 			})
@@ -131,8 +132,8 @@ export class InlineDatePickerViewPlugin implements PluginValue {
 						}
 
 						const widget = new InlineDatePickerWidget(
-							node.from,
-							node.to,
+							node.from - 2,
+							node.to + 2,
 							date,
 							format,
 						)

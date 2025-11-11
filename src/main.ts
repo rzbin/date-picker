@@ -1,6 +1,7 @@
 import moment from "moment"
 import { type App, Plugin, PluginSettingTab, Setting } from "obsidian"
 import { insertTodaysDate } from "src/commands/insertTodaysDate"
+import { insertTodaysDateLink } from "src/commands/insertTodaysDateLink"
 import { openDatePicker } from "src/commands/openDatePicker"
 import { inlineDatePickerViewPlugin } from "src/decoration/plugin"
 
@@ -19,6 +20,7 @@ export default class InlineDatePickerPlugin extends Plugin {
 		await this.loadSettings()
 
 		this.addCommand(insertTodaysDate)
+		this.addCommand(insertTodaysDateLink)
 		this.addCommand(openDatePicker)
 
 		this.addSettingTab(new InlineDatePickerSettingTab(this.app, this))
