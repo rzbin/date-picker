@@ -2,7 +2,7 @@
   "lockfileVersion": 1,
   "workspaces": {
     "": {
-      "name": "inline-date-picker",
+      "name": "date-picker",
       "dependencies": {
         "@codemirror/language": "^6.11.3",
       },
