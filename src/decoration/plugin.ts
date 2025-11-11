@@ -2,15 +2,15 @@ import { syntaxTree } from "@codemirror/language";
 import { RangeSetBuilder } from "@codemirror/state";
 import {
 	ViewUpdate,
-	PluginValue,
+	type PluginValue,
 	EditorView,
 	ViewPlugin,
-	DecorationSet,
+	type DecorationSet,
 	Decoration,
 	WidgetType,
-	PluginSpec,
+	type PluginSpec,
 } from "@codemirror/view";
-import InlineDatePickerPlugin from "main";
+import InlineDatePickerPlugin from "src/main";
 import moment from "moment";
 
 class InlineDatePickerWidget extends WidgetType {
@@ -86,7 +86,7 @@ class InlineDatePickerWidget extends WidgetType {
 		this.input.showPicker();
 	}
 
-	eq(other: InlineDatePickerWidget): boolean {
+	override eq(other: InlineDatePickerWidget): boolean {
 		return (
 			this.from === other.from &&
 			this.to === other.to &&
@@ -98,7 +98,7 @@ class InlineDatePickerWidget extends WidgetType {
 
 export class InlineDatePickerViewPlugin implements PluginValue {
 	decorations: DecorationSet;
-	widgets: InlineDatePickerWidget[];
+	widgets: InlineDatePickerWidget[] = [];
 
 	constructor(view: EditorView) {
 		this.decorations = this.buildDecorations(view);

@@ -15,7 +15,7 @@ const DEFAULT_SETTINGS: InlineDatePickerSettings = {
 export default class InlineDatePickerPlugin extends Plugin {
 	public static settings: InlineDatePickerSettings;
 
-	async onload() {
+	override async onload() {
 		await this.loadSettings();
 
 		this.addCommand(insertTodaysDate);
@@ -26,7 +26,7 @@ export default class InlineDatePickerPlugin extends Plugin {
 		this.registerEditorExtension([inlineDatePickerViewPlugin]);
 	}
 
-	onunload() {}
+	override onunload() {}
 
 	async loadSettings() {
 		InlineDatePickerPlugin.settings = Object.assign(

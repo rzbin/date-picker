@@ -1,4 +1,4 @@
-import { Command, Notice } from "obsidian";
+import { type Command, Notice } from "obsidian";
 import {
 	InlineDatePickerViewPlugin,
 	inlineDatePickerViewPlugin,
