@@ -1,7 +1,7 @@
 {
-	"name": "inline-date-picker",
+	"name": "date-picker",
 	"version": "1.0.0",
-	"description": "inline-date-picker",
+	"description": "Pick dates using a calendar view in Obsidian.",
 	"main": "main.js",
 	"packageManager": "bun@1.2.22",
 	"scripts": {

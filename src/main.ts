@@ -64,7 +64,7 @@ class InlineDatePickerSettingTab extends PluginSettingTab {
 		}
 
 		const dateFormatSetting = new Setting(containerEl)
-			.setName("Date Format")
+			.setName("Date format")
 			.setDesc(dateFormatDescription())
 			.addText((text) =>
 				text
