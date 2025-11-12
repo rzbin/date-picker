@@ -17,13 +17,13 @@
 		"@types/bun": "latest",
 		"obsidian": "latest"
 	},
+	"dependencies": {
+		"@codemirror/state": "^6.5.2",
+		"@codemirror/view": "^6.38.6"
+	},
 	"peerDependencies": {
 		"typescript": "^5"
 	},
 	"private": true,
-	"license": "MIT",
-	"dependencies": {
-		"@codemirror/state": "^6.5.2",
-		"@codemirror/view": "^6.38.6"
-	}
+	"license": "MIT"
 }
