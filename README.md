@@ -1,7 +1,6 @@
 # Date Picker
 
-[![Install](https://img.shields.io/badge/dynamic/json?logo=obsidian&color=%238962E8&label=Install&query=%24%5B%22date-picker%22%5D.downloads&url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json)](obsidian://show-plugin?id=date-picker)
-[![Version](https://img.shields.io/github/v/release/rzbin/date-picker?logo=obsidian&color=%238962E8&label=Community)](https://community.obsidian.md/plugins/date-picker)
+[![Install](https://img.shields.io/badge/dynamic/json?logo=obsidian&color=%238962E8&label=Install&query=%24%5B%22date-picker%22%5D.downloads&url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json)](https://community.obsidian.md/plugins/date-picker)
 
 Pick dates using a calendar view in Obsidian.
 
