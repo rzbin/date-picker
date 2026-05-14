@@ -1,4 +1,5 @@
-import { type Command, moment } from "obsidian"
+import moment from "moment"
+import type { Command } from "obsidian"
 import InlineDatePickerPlugin from "src/main"
 
 export const insertTodaysDate: Command = {
