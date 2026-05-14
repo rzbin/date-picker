@@ -3,6 +3,9 @@
 	width: 2em;
 	height: 2em;
 	color: transparent;
-	text-indent: 100em;
 	padding: 0;
+}
+
+.cm-contentContainer input[type="date"]::-webkit-datetime-edit {
+	visibility: hidden;
 }
