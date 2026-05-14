@@ -33,7 +33,7 @@ export default class InlineDatePickerPlugin extends Plugin {
 		InlineDatePickerPlugin.settings = Object.assign(
 			{},
 			DEFAULT_SETTINGS,
-			await this.loadData() as Partial<InlineDatePickerSettings>,
+			(await this.loadData()) as Partial<InlineDatePickerSettings>,
 		)
 	}
 
