@@ -42,6 +42,10 @@ class InlineDatePickerWidget extends WidgetType {
 			this.input.showPicker()
 		})
 
+		this.input.addEventListener("mousedown", (e) => {
+			e.preventDefault()
+		})
+
 		// Workaround to return focus to the editor when the picker is closed
 		this.input.addEventListener("mouseup", () => {
 			view.focus()
