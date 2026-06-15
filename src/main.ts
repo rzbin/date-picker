@@ -1,4 +1,4 @@
-import { type App, Plugin, PluginSettingTab, Setting } from "obsidian"
+import { type App, moment, Plugin, PluginSettingTab, Setting } from "obsidian"
 import { insertTodaysDate } from "src/commands/insertTodaysDate"
 import { insertTodaysDateLink } from "src/commands/insertTodaysDateLink"
 import { openDatePicker } from "src/commands/openDatePicker"
@@ -58,7 +58,7 @@ class InlineDatePickerSettingTab extends PluginSettingTab {
 
 		const dateFormatDescription = () => {
 			const format = InlineDatePickerPlugin.settings.dateFormat
-			const example = window.moment().format(format)
+			const example = moment().format(format)
 			return `Set the format for inserted dates. Uses Moment.js formatting. Your current syntax looks like this: ${example}`
 		}
 

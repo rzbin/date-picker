@@ -10,6 +10,7 @@ import {
 	type ViewUpdate,
 	WidgetType,
 } from "@codemirror/view"
+import { moment } from "obsidian"
 import InlineDatePickerPlugin from "src/main"
 
 class InlineDatePickerWidget extends WidgetType {
@@ -57,7 +58,7 @@ class InlineDatePickerWidget extends WidgetType {
 		})
 
 		this.input.onchange = () => {
-			const date = window.moment(this.input.value)
+			const date = moment(this.input.value)
 			const formattedDate = date.format(this.format)
 			const link = `[[${formattedDate}]]`
 
@@ -128,7 +129,7 @@ export class InlineDatePickerViewPlugin implements PluginValue {
 					if (node.type.name.startsWith("hmd-internal-link")) {
 						const nodeText = view.state.doc.sliceString(node.from, node.to)
 						const format = InlineDatePickerPlugin.settings.dateFormat
-						const date = window.moment(nodeText, format, true)
+						const date = moment(nodeText, format, true)
 
 						if (!date.isValid()) {
 							return
