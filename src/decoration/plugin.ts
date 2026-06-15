@@ -10,7 +10,7 @@ import {
 	type ViewUpdate,
 	WidgetType,
 } from "@codemirror/view"
-import { moment } from "obsidian"
+import { moment, Platform } from "obsidian"
 import InlineDatePickerPlugin from "src/main"
 
 class InlineDatePickerWidget extends WidgetType {
@@ -20,6 +20,8 @@ class InlineDatePickerWidget extends WidgetType {
 	format: string
 
 	input: HTMLInputElement
+
+	isMobile: Boolean = Platform.isIosApp || Platform.isAndroidApp
 
 	constructor(from: number, to: number, date: moment.Moment, format: string) {
 		super()
@@ -35,27 +37,29 @@ class InlineDatePickerWidget extends WidgetType {
 		this.input.value = this.date.format("YYYY-MM-DD")
 		this.input.classList.add("inline-date-picker-input")
 
-		// To prevent using the text input
-		this.input.addEventListener("mouseup", (e) => {
-			e.preventDefault()
-			this.input.blur()
-			this.input.showPicker()
-		})
+		if (!this.isMobile){
+			// To prevent clicking the margin of the input not opening the picker
+			this.input.addEventListener("pointerup", (e) => {
+				e.preventDefault()
+				this.input.blur()
+				this.input.showPicker()
+			})
 
-		this.input.addEventListener("mousedown", (e) => {
-			e.preventDefault()
-		})
+			this.input.addEventListener("pointerdown", (e) => {
+				e.preventDefault()
+			})
 
-		// Workaround to return focus to the editor when the picker is closed
-		this.input.addEventListener("mouseup", () => {
-			view.focus()
-		})
-		this.input.addEventListener("blur", () => {
-			view.focus()
-		})
-		this.input.addEventListener("keydown", () => {
-			view.focus()
-		})
+			// Workaround to return focus to the editor when the picker is closed
+			this.input.addEventListener("mouseup", () => {
+				view.focus()
+			})
+			this.input.addEventListener("blur", () => {
+				view.focus()
+			})
+			this.input.addEventListener("keydown", () => {
+				view.focus()
+			})
+		}
 
 		this.input.onchange = () => {
 			const date = moment(this.input.value)

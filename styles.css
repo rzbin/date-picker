@@ -4,8 +4,10 @@
 	height: 2em;
 	color: transparent;
 	padding: 0;
+  display: inline-block;
+  vertical-align: middle;
 }
 
-.cm-contentContainer input[type="date"]::-webkit-datetime-edit {
+.cm-contentContainer input[type="date"].inline-date-picker-input::-webkit-datetime-edit {
 	visibility: hidden;
 }
