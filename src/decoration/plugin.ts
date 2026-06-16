@@ -37,7 +37,7 @@ class InlineDatePickerWidget extends WidgetType {
 		this.input.value = this.date.format("YYYY-MM-DD")
 		this.input.classList.add("inline-date-picker-input")
 
-		if (!this.isMobile){
+		if (!this.isMobile) {
 			// To prevent clicking the margin of the input not opening the picker
 			this.input.addEventListener("pointerup", (e) => {
 				e.preventDefault()
