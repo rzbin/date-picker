@@ -21,7 +21,7 @@ class InlineDatePickerWidget extends WidgetType {
 
 	input: HTMLInputElement
 
-	isMobile: Boolean = Platform.isIosApp || Platform.isAndroidApp
+	isMobile: boolean = Platform.isIosApp || Platform.isAndroidApp
 
 	constructor(from: number, to: number, date: moment.Moment, format: string) {
 		super()
