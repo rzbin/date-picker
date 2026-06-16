@@ -21,7 +21,7 @@ class InlineDatePickerWidget extends WidgetType {
 
 	input: HTMLInputElement
 
-	isMobile: Boolean = Platform.isIosApp || Platform.isAndroidApp
+	isMobile: boolean = Platform.isIosApp || Platform.isAndroidApp
 
 	constructor(from: number, to: number, date: moment.Moment, format: string) {
 		super()
@@ -37,7 +37,7 @@ class InlineDatePickerWidget extends WidgetType {
 		this.input.value = this.date.format("YYYY-MM-DD")
 		this.input.classList.add("inline-date-picker-input")
 
-		if (!this.isMobile){
+		if (!this.isMobile) {
 			// To prevent clicking the margin of the input not opening the picker
 			this.input.addEventListener("pointerup", (e) => {
 				e.preventDefault()
